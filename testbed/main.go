@@ -1,25 +1,59 @@
 package main
 
-import "github.com/wolfired/golabs/event"
-import "fmt"
+import (
+	"fmt"
+)
+
+type IBook interface {
+	read()
+}
+
+type Book struct {
+	byte
+}
+
+func (b Book) read() {
+	fmt.Printf("%p\n", &b)
+}
+
+func (b *Book) name() {
+	fmt.Printf("%p\n", b)
+}
+
+func test(ib IBook) {
+
+}
 
 func main() {
-	var e event.IEvent = MyEvent{"click"}
-	var er event.IEventRouter = &MyRouter{}
-	er.Router(e)
-}
+	var b Book
+	fmt.Printf("%p\n", &b)
 
-type MyEvent struct {
-	_type string
-}
+	b.read()
+	(&b).name()
 
-func (this MyEvent) Type() string {
-	return this._type
-}
+	fmt.Println("----------")
 
-type MyRouter struct {
-}
+	var bp *Book = new(Book)
+	fmt.Printf("%p\n", bp)
 
-func (this MyRouter) Router(e event.IEvent) {
-	fmt.Println(e.Type())
+	(*bp).read()
+	bp.name()
+
+	fmt.Println("----------")
+
+	var ib IBook
+
+	ib = b
+	fmt.Printf("%p\n", &ib)
+	ib.read()
+
+	fmt.Println("----------")
+
+	ib = bp
+	fmt.Printf("%p\n", ib)
+	ib.read()
+
+	var ch chan int
+	ch <- 1
+	var i int = <-ch
 }

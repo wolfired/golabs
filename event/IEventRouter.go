@@ -1,5 +1,5 @@
 package event
 
 type IEventRouter interface {
-	Router(e IEvent)
+	Route(e IEvent)
 }
