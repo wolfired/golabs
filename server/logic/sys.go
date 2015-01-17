@@ -1,0 +1,11 @@
+package logic
+
+
+
+
+
+
+
+func Auth() {
+
+}

@@ -1,34 +1,15 @@
 package main
 
 import (
-	"fmt"
-	"net"
 	"time"
+	"github.com/wolfired/golabs/server"
 )
 
 func main() {
-	ln, err := net.Listen("tcp", ":8080")
-	if err != nil {
-		// handle error
-	}
+	var logic_sev server.LogicServer = server.LogicServer{"tcp", ":8080"}
+	go logic_sev.Run()
 
-	for {
-		conn, err := ln.Accept()
-		if err != nil {
-			// handle error
-			continue
-		}
-		go handler(conn)
-	}
-}
-
-func handler(conn net.Conn) {
-	time.Tick(d)
-
-	fmt.Println(conn.RemoteAddr().String())
-	fmt.Printf("%T\n", conn)
-
-	b := make([]byte, 0, 1204)
-	conn.Read()
-	fmt.Println(len(b))
+	var gate_sev server.GateServer = server.GateServer{"tcp", ":8081"}
+	go gate_sev.Run()
+	time.Sleep(1 * time.Minute)
 }
