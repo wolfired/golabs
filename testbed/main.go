@@ -1,9 +1,9 @@
 package main
 
 import (
-	"os"
+	"fmt"
 )
 
 func main() {
-	os.Stdin
+	fmt.Println("c_arr")
 }

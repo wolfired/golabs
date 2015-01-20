@@ -1,14 +1,10 @@
 package cli
 
-
-
-
-
 type Command struct {
-	key string
-	options map[string]Option
+	Key     string
+	Options map[string]Option
 }
 
 type Option struct {
-	key string
+	Key string
 }
