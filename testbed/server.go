@@ -2,6 +2,7 @@ package main
 
 import (
 	"time"
+
 	"github.com/wolfired/golabs/server"
 )
 
@@ -11,5 +12,6 @@ func main() {
 
 	var gate_sev server.GateServer = server.GateServer{"tcp", ":8081"}
 	go gate_sev.Run()
-	time.Sleep(1 * time.Minute)
+
+	time.Sleep(60 * time.Minute)
 }

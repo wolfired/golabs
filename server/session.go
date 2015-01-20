@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"net"
+
+	"github.com/wolfired/golabs/server/logic"
 )
 
 type Session struct {
@@ -23,6 +25,7 @@ func (this *Session) Run() {
 	for {
 		line, err := bfio.ReadString(0)
 		if nil == err {
+			logic.Saver[0]()
 			fmt.Println(ra, "->", line)
 		} else {
 			break
