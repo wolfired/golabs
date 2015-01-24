@@ -1,4 +1,6 @@
 language: go
 
-go:
-	- tip
+script: cd server && go test
+
+notifications:
+	email: false
