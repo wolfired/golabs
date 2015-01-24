@@ -3,4 +3,4 @@ language: go
 script: cd server && go test
 
 notifications:
-	email: false
+ email: false
