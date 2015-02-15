@@ -5,14 +5,19 @@ import "archive/zip"
 import "bytes"
 import "os"
 
+// import "unsafe"
+
 import "fmt"
 
-type Int int
+func exchange(x, y int, more ...string) (int, int) {
+	for _, v := range more {
+		fmt.Println(v)
+	}
+	return y, x
+}
 
 func main() {
-	i := 1
-	var I Int = Int(i)
-	fmt.Println(I)
+	fmt.Println(exchange(1, 2, "3", "4"))
 
 	b := bytes.Buffer{}
 
