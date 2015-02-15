@@ -1,12 +1,19 @@
 package main
 
 import "archive/zip"
+
 import "bytes"
 import "os"
 
 import "fmt"
 
+type Int int
+
 func main() {
+	i := 1
+	var I Int = Int(i)
+	fmt.Println(I)
+
 	b := bytes.Buffer{}
 
 	zip_file_buf := zip.NewWriter(&b)
