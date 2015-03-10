@@ -5,20 +5,11 @@ import "archive/zip"
 import "bytes"
 import "os"
 
-// import "unsafe"
-
 import "fmt"
-
-func exchange(x, y int, more ...string) (int, int) {
-	for _, v := range more {
-		fmt.Println(v)
-	}
-	return y, x
-}
+import "github.com/wolfired/golabs/server"
+import "time"
 
 func main() {
-	fmt.Println(exchange(1, 2, "3", "4"))
-
 	b := bytes.Buffer{}
 
 	zip_file_buf := zip.NewWriter(&b)
@@ -29,7 +20,7 @@ func main() {
 		zip_item.Write([]byte("18601011241"))
 		zip_file_buf.Close()
 
-		zip_file, err := os.Create("D:/phones.zip")
+		zip_file, err := os.Create("/home/link/phones.zip")
 		if nil == err {
 			zip_file.Write(b.Bytes())
 			zip_file.Close()
@@ -40,4 +31,11 @@ func main() {
 	} else {
 		fmt.Println(err.Error())
 	}
+
+	gs := server.GateServer{server.Server{"tcp", ":9090"}}
+	go gs.Run()
+
+	time.Sleep(60 * time.Second)
+
+	fmt.Println("exit")
 }

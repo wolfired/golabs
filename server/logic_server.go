@@ -7,20 +7,19 @@ import (
 )
 
 type LogicServer struct {
-	Net  string
-	Addr string
+	Server
 }
 
-func (this *LogicServer) Run() {
-	ln, err := net.Listen(this.Net, this.Addr)
-	if err != nil {
-		// handle error
+func (self *LogicServer) Run() {
+	ln, err := net.Listen(self.Net, self.Addr)
+	if nil != err {
+		fmt.Println(err)
 	}
 
 	for {
 		conn, err := ln.Accept()
-		if err != nil {
-			// handle error
+		if nil != err {
+			fmt.Println(err)
 			continue
 		}
 		ra := conn.RemoteAddr().String()
