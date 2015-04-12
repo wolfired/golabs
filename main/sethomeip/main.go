@@ -21,11 +21,11 @@ func set_home_ip() {
 		log.Fatalln(err)
 	}
 
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if nil != err {
-		log.Fatalln(err)
-	}
+	/*	defer resp.Body.Close()
+		body, err := ioutil.ReadAll(resp.Body)
+		if nil != err {
+			log.Fatalln(err)
+		}
 
-	fmt.Println(string(body))
+		fmt.Println(string(body))*/
 }
