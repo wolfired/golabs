@@ -14,7 +14,7 @@ func main() {
 }
 
 func set_home_ip() {
-	resp, err := http.Get("https://ddns-deriflow.rhcloud.com//set_home_ip?passwd=112358")
+	_, err := http.Get("https://ddns-deriflow.rhcloud.com//set_home_ip?passwd=112358")
 	if nil != err {
 		log.Fatalln(err)
 	}
