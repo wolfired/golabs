@@ -6,8 +6,9 @@ import "bytes"
 import "os"
 
 import "fmt"
-import "github.com/wolfired/golabs/server"
-import "time"
+
+// import "github.com/wolfired/golabs/server"
+// import "time"
 
 func main() {
 	b := bytes.Buffer{}
@@ -20,7 +21,7 @@ func main() {
 		zip_item.Write([]byte("18601011241"))
 		zip_file_buf.Close()
 
-		zip_file, err := os.Create("/home/link/phones.zip")
+		zip_file, err := os.Create("C:/Users/zelda/Desktop/res/phones.zip")
 		if nil == err {
 			zip_file.Write(b.Bytes())
 			zip_file.Close()
@@ -32,10 +33,10 @@ func main() {
 		fmt.Println(err.Error())
 	}
 
-	gs := server.GateServer{server.Server{"tcp", ":9090"}}
-	go gs.Run()
+	// gs := server.GateServer{server.Server{"tcp", ":9090"}}
+	// go gs.Run()
 
-	time.Sleep(60 * time.Second)
+	// time.Sleep(60 * time.Second)
 
-	fmt.Println("exit")
+	// fmt.Println("exit")
 }
