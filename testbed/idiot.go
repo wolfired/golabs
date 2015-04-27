@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/wolfired/golabs/idiotDB"
+// "github.com/wolfired/golabs/idiotDB"
 )
 
 func main() {
