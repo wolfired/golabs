@@ -9,7 +9,7 @@ import (
 func main() {
 	for true {
 		set_home_ip()
-		time.Sleep(15 * time.Minute)
+		time.Sleep(5 * time.Minute)
 	}
 }
 
