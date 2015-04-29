@@ -8,14 +8,19 @@ import (
 )
 
 func main() {
-	for 1 == len(os.Args) {
+	if 1 < len(os.Args) {
+		set_home_ip()
+		return
+	}
+
+	for true {
 		set_home_ip()
 		time.Sleep(5 * time.Minute)
 	}
 }
 
 func set_home_ip() {
-	_, err := http.Get("https://ddns-deriflow.rhcloud.com//set_home_ip?passwd=112358")
+	_, err := http.Get("https://ddns-deriflow.rhcloud.com/set_home_ip?passwd=112358")
 	if nil != err {
 		// log.Fatalln(err)
 	}
