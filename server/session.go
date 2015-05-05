@@ -12,15 +12,15 @@ type Session struct {
 	conn net.Conn
 }
 
-func (self *Session) Setup(c net.Conn) *Session {
-	self.conn = c
-	return self
+func (s *Session) Setup(c net.Conn) *Session {
+	s.conn = c
+	return s
 }
 
-func (self *Session) Run() {
-	ra := self.conn.RemoteAddr().String()
+func (s *Session) Run() {
+	ra := s.conn.RemoteAddr().String()
 
-	bfio := bufio.NewReaderSize(self.conn, 1024)
+	bfio := bufio.NewReaderSize(s.conn, 1024)
 
 	for {
 		line, err := bfio.ReadString(0)

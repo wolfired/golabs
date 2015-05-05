@@ -9,8 +9,8 @@ type GateServer struct {
 	Server
 }
 
-func (self *GateServer) Run() {
-	ln, err := net.Listen(self.Net, self.Addr)
+func (g *GateServer) Run() {
+	ln, err := net.Listen(g.Net, g.Addr)
 	if nil != err {
 		fmt.Println(err)
 	}

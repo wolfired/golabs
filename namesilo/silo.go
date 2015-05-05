@@ -21,18 +21,18 @@ type SiloClient struct {
 	Key     string
 }
 
-func (self *SiloClient) Url(operation string, params map[string]string) string {
+func (s *SiloClient) Url(operation string, params map[string]string) string {
 	params_arr := make([]string, len(params)+3)
 
 	idx := 0
 
-	params_arr[idx] = fmt.Sprintf("version=%d", self.Version)
+	params_arr[idx] = fmt.Sprintf("version=%d", s.Version)
 	idx++
 
-	params_arr[idx] = "type=" + self.Type
+	params_arr[idx] = "type=" + s.Type
 	idx++
 
-	params_arr[idx] = "key=" + self.Key
+	params_arr[idx] = "key=" + s.Key
 	idx++
 
 	for k, v := range params {

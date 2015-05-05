@@ -25,8 +25,8 @@ type ResourceRecord struct {
 	Distance uint   `xml:"distance"`
 }
 
-func (self *DNSListRecordsResp) GetResourceRecordByHost(host string) *ResourceRecord {
-	for _, rr := range self.DnsListRecordsReply.ResourceRecords {
+func (l *DNSListRecordsResp) GetResourceRecordByHost(host string) *ResourceRecord {
+	for _, rr := range l.DnsListRecordsReply.ResourceRecords {
 		if host == rr.Host {
 			return &rr
 		}
@@ -35,8 +35,8 @@ func (self *DNSListRecordsResp) GetResourceRecordByHost(host string) *ResourceRe
 	return nil
 }
 
-func (self *SiloClient) DNSListRecords(domain string) *DNSListRecordsResp {
-	resp, _ := http.Get(self.Url("dnsListRecords", map[string]string{"domain": domain}))
+func (s *SiloClient) DNSListRecords(domain string) *DNSListRecordsResp {
+	resp, _ := http.Get(s.Url("dnsListRecords", map[string]string{"domain": domain}))
 
 	bytes, _ := ioutil.ReadAll(resp.Body)
 	resp.Body.Close()

@@ -10,8 +10,8 @@ type LogicServer struct {
 	Server
 }
 
-func (self *LogicServer) Run() {
-	ln, err := net.Listen(self.Net, self.Addr)
+func (l *LogicServer) Run() {
+	ln, err := net.Listen(l.Net, l.Addr)
 	if nil != err {
 		fmt.Println(err)
 	}

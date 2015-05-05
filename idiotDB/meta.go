@@ -6,21 +6,35 @@ const (
 	FIELD_TYPE_STRING string = "string"
 )
 
-type Meta_Table struct {
+type MetaTable struct {
 	Name   string
-	Fields map[string]Meta_Field
+	Fields map[string]MetaField
 }
 
-func (self *Meta_Table) toZip() {
+func (t *MetaTable) RawData() []byte {
+	zw := CreateZipWrapper()
 
+	for fieldName, field := range t.Fields {
+		zw.AddZipItem(fieldName+".zip", field.RawData())
+	}
+
+	zw.Close()
+
+	return zw.RawData()
 }
 
-type Meta_Field struct {
+type MetaField struct {
 	Name    string
 	Type    string
 	Default string
 }
 
-func (self *Meta_Field) toZip() {
+func (f *MetaField) RawData() []byte {
+	zw := CreateZipWrapper()
+	zw.AddZipItem("name", []byte(f.Name))
+	zw.AddZipItem("type", []byte(f.Type))
+	zw.AddZipItem("default", []byte(f.Default))
+	zw.Close()
 
+	return zw.RawData()
 }

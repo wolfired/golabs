@@ -16,8 +16,8 @@ type ListDomainsReply struct {
 	Domains []string `xml:"reply>domains>domain"`
 }
 
-func (self *SiloClient) ListDomains() *ListDomainsResp {
-	resp, _ := http.Get(self.Url("listDomains", map[string]string{}))
+func (s *SiloClient) ListDomains() *ListDomainsResp {
+	resp, _ := http.Get(s.Url("listDomains", map[string]string{}))
 
 	bytes, _ := ioutil.ReadAll(resp.Body)
 	resp.Body.Close()
