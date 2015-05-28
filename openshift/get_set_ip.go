@@ -23,6 +23,15 @@ var (
 )
 
 /*
+首页
+*/
+func Index(res http.ResponseWriter, req *http.Request) {
+	fmt.Fprintf(res, "%s", "<a href='set_ip?passwd=&key=&domain=&host=' target='_blank'>记录IP</a><br/>")
+	fmt.Fprintf(res, "%s", "<a href='get_ip?key=' target='_blank'>获取IP</a><br/>")
+	fmt.Fprintf(res, "%s", "<a href='show_nts?key=' target='_blank'>下次更新IP的时间</a>")
+}
+
+/*
 记录IP到指定KEY，URL参数：passwd=密码，key=保存键值，domain=要同步更新A记录的域名（可选），host=要同步更新A记录的别名（可选）
 */
 func SetIP(res http.ResponseWriter, req *http.Request) {
