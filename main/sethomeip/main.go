@@ -20,7 +20,7 @@ func main() {
 }
 
 func setHomeIP() {
-	_, err := http.Get("https://ddns-deriflow.rhcloud.com/set_home_ip?passwd=112358")
+	_, err := http.Get("https://ddns-deriflow.rhcloud.com/set_ip?passwd=112358&key=81&domain=wolfired.com&host=pi")
 	if nil != err {
 		// log.Fatalln(err)
 	}
