@@ -58,7 +58,7 @@ func SetIP(res http.ResponseWriter, req *http.Request) {
 
 	r.ip = req.Header.Get("X-Forwarded-For") //内部端口跳转
 	if "" == r.ip {
-		r.ip = req.Host
+		r.ip = req.RemoteAddr
 	}
 	r.ts = time.Now()
 
