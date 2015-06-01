@@ -10,7 +10,11 @@ func main() {
 }
 
 func testSwfchef() {
-	s := swfchef.ReadSwf("C:\\Users\\zelda\\Desktop\\res\\Z.swf")
+	s := swfchef.ReadSwf("C:\\Users\\zelda\\Desktop\\res\\C.swf")
 
-	fmt.Printf("%d", s.Size())
+	// fmt.Print(s)
+	fmt.Printf("%s\n", s.Signature())
+	fmt.Printf("%d\n", s.Version())
+	fmt.Printf("%d\n", s.Length())
+
 }
