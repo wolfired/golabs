@@ -27,29 +27,29 @@ var (
 
 type xSwf func([]byte) *Swf
 
-func fSwf(bs []byte) *Swf {
+func fSwf(raw []byte) *Swf {
 	swf := new(Swf)
-	swf.bs = bs
+	swf.raw = raw
 	return swf
 }
 
-func cSwf(bs []byte) *Swf {
-	zr, err := zlib.NewReader(bytes.NewReader(bs[8:]))
+func cSwf(raw []byte) *Swf {
+	zr, err := zlib.NewReader(bytes.NewReader(raw[8:]))
 	defer zr.Close()
 	if nil != err {
 		log.Fatal(err)
 	}
 
-	size := b2ui32(bs[4:8])
+	size := raw2ui32(raw[4:8])
 
 	swf := new(Swf)
-	swf.bs = make([]byte, size)
+	swf.raw = make([]byte, size)
 
-	for i, v := range bs[:8] {
-		swf.bs[i] = v
+	for i, v := range raw[:8] {
+		swf.raw[i] = v
 	}
 
-	_, err = zr.Read(swf.bs[8:])
+	_, err = zr.Read(swf.raw[8:])
 	if nil != err {
 		log.Fatal(err)
 	}
@@ -57,38 +57,53 @@ func cSwf(bs []byte) *Swf {
 	return swf
 }
 
-func zSwf(bs []byte) *Swf {
+func zSwf(raw []byte) *Swf {
 	return nil
 }
 
 type Swf struct {
-	bs []byte
+	raw       []byte
+	frameSize rectangle
 }
 
 func ReadSwf(swffile string) (swf *Swf) {
-	bs, err := ioutil.ReadFile(swffile)
+	raw, err := ioutil.ReadFile(swffile)
 	if nil != err {
 		log.Fatal(err)
 	}
-	return swfHandler[bs[0]](bs)
+
+	swf = swfHandler[raw[0]](raw)
+	swf.frameSize = raw2rectangle(swf.raw[8:])
+
+	return
 }
 
 func (swf *Swf) Signature() string {
-	return string(swf.bs[:3])
+	return string(swf.raw[:3])
 }
 
 func (swf *Swf) Version() ui8 {
-	return b2ui8(swf.bs[3:4])
+	return raw2ui8(swf.raw[3:4])
 }
 
 func (swf *Swf) Length() ui32 {
-	return b2ui32(swf.bs[4:8])
+	return raw2ui32(swf.raw[4:8])
 }
 
 func (swf *Swf) FrameSize() rectangle {
-	return rectangle{}
+	return swf.frameSize
 }
 
-func (swf *Swf) Tag() {
+func (swf *Swf) FrameRate() fixed16 {
+	offset := 8 + swf.frameSize.Length()
+	return raw2fixed16(swf.raw[offset : offset+2])
+}
+
+func (swf *Swf) FrameCount() ui16 {
+	offset := 8 + swf.frameSize.Length() + 2
+	return raw2ui16(swf.raw[offset : offset+2])
+}
+
+func (swf *Swf) Tags() {
 
 }

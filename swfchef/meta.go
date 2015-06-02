@@ -1,21 +1,26 @@
 package swfchef
 
 type rectangle struct {
-	xmin sbn
-	xmax sbn
-	ymin sbn
-	ymax sbn
+	nbits ubn
+	xmin  sbn
+	xmax  sbn
+	ymin  sbn
+	ymax  sbn
 }
 
-type fixed float32
-type fixed8 float32
+func (rect *rectangle) Length() uint8 {
+	return uint8(5 + rect.nbits*4/8 + 1)
+}
 
-func b2rectangle(b []byte) (r rectangle) {
+func raw2rectangle(raw []byte) (r rectangle) {
 	r = rectangle{}
-	n := uint8(b2sbn(b, 0, 5))
-	r.xmin = b2sbn(b, 5, n)
-	r.xmax = b2sbn(b, 5+n, n)
-	r.ymin = b2sbn(b, 5+2*n, n)
-	r.ymax = b2sbn(b, 5+2*n, n)
+	r.nbits = raw2ubn(raw, 0, 5)
+
+	n := uint8(r.nbits)
+	r.xmin = raw2sbn(raw, 5, n)
+	r.xmax = raw2sbn(raw, 5+n, n)
+	r.ymin = raw2sbn(raw, 5+2*n, n)
+	r.ymax = raw2sbn(raw, 5+3*n, n)
+
 	return
 }

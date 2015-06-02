@@ -3,7 +3,7 @@ language: go
 go:
  - tip
 
-script: cd server && go test
+script: cd swfchef && go test
 
 notifications:
  email: false
