@@ -41,7 +41,7 @@ func testIdiotDB() {
 }
 
 func testSwfchef() {
-	s := swfchef.ReadSwf("C:\\Users\\zelda\\Desktop\\res\\C.swf")
+	s := swfchef.SwfRead("C:\\Users\\zelda\\Desktop\\res\\C.swf")
 
 	fmt.Printf("%s\n", s.Signature())
 	fmt.Printf("%d\n", s.Version())

@@ -66,7 +66,7 @@ type Swf struct {
 	frameSize rectangle
 }
 
-func ReadSwf(swffile string) (swf *Swf) {
+func SwfRead(swffile string) (swf *Swf) {
 	raw, err := ioutil.ReadFile(swffile)
 	if nil != err {
 		log.Fatal(err)
@@ -105,5 +105,5 @@ func (swf *Swf) FrameCount() ui16 {
 }
 
 func (swf *Swf) Tags() {
-
+	// offset := 8 + swf.frameSize.Length() + 2 + 2
 }

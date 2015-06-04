@@ -1,215 +1,207 @@
 package swfchef
 
-import (
-	"reflect"
-)
-
-var (
-	tagMap [128]reflect.Type = [128]reflect.Type{}
-)
-
-func init() {
-}
-
 type tagHeader struct {
 }
 
-func (th *tagHeader) analyse() {
+type tag struct {
+}
 
+func tagCreate(raw []byte) interface{} {
+	return nil
 }
 
 type tagEnd struct {
-	tagHeader
+	tag
 }
 type tagShowFrame struct {
-	tagHeader
+	tag
 }
 type tagDefineShape struct {
-	tagHeader
+	tag
 }
 type tagPlaceObject struct {
-	tagHeader
+	tag
 }
 type tagRemoveObject struct {
-	tagHeader
+	tag
 }
 type tagDefineBits struct {
-	tagHeader
+	tag
 }
 type tagDefineButton struct {
-	tagHeader
+	tag
 }
 type tagJPEGTables struct {
-	tagHeader
+	tag
 }
 type tagSetBackgroundColor struct {
-	tagHeader
+	tag
 }
 type tagDefineFont struct {
-	tagHeader
+	tag
 }
 type tagDefineText struct {
-	tagHeader
+	tag
 }
 type tagDoAction struct {
-	tagHeader
+	tag
 }
 type tagDefineFontInfo struct {
-	tagHeader
+	tag
 }
 type tagDefineSound struct {
-	tagHeader
+	tag
 }
 type tagStartSound struct {
-	tagHeader
+	tag
 }
 type tagDefineButtonSound struct {
-	tagHeader
+	tag
 }
 type tagSoundStreamHead struct {
-	tagHeader
+	tag
 }
 type tagSoundStreamBlock struct {
-	tagHeader
+	tag
 }
 type tagDefineBitsLossless struct {
-	tagHeader
+	tag
 }
 type tagDefineBitsJPEG2 struct {
-	tagHeader
+	tag
 }
 type tagDefineShape2 struct {
-	tagHeader
+	tag
 }
 type tagDefineButtonCxform struct {
-	tagHeader
+	tag
 }
 type tagProtect struct {
-	tagHeader
+	tag
 }
 type tagPlaceObject2 struct {
-	tagHeader
+	tag
 }
 type tagRemoveObject2 struct {
-	tagHeader
+	tag
 }
 type tagDefineShape3 struct {
-	tagHeader
+	tag
 }
 type tagDefineText2 struct {
-	tagHeader
+	tag
 }
 type tagDefineButton2 struct {
-	tagHeader
+	tag
 }
 type tagDefineBitsJPEG3 struct {
-	tagHeader
+	tag
 }
 type tagDefineBitsLossless2 struct {
-	tagHeader
+	tag
 }
 type tagDefineEditText struct {
-	tagHeader
+	tag
 }
 type tagDefineSprite struct {
-	tagHeader
+	tag
 }
 type tagFrameLabel struct {
-	tagHeader
+	tag
 }
 type tagSoundStreamHead2 struct {
-	tagHeader
+	tag
 }
 type tagDefineMorphShape struct {
-	tagHeader
+	tag
 }
 type tagDefineFont2 struct {
-	tagHeader
+	tag
 }
 type tagExportAssets struct {
-	tagHeader
+	tag
 }
 type tagImportAssets struct {
-	tagHeader
+	tag
 }
 type tagEnableDebugger struct {
-	tagHeader
+	tag
 }
 type tagDoInitAction struct {
-	tagHeader
+	tag
 }
 type tagDefineVideoStream struct {
-	tagHeader
+	tag
 }
 type tagVideoFrame struct {
-	tagHeader
+	tag
 }
 type tagDefineFontInfo2 struct {
-	tagHeader
+	tag
 }
 type tagEnableDebugger2 struct {
-	tagHeader
+	tag
 }
 type tagScriptLimits struct {
-	tagHeader
+	tag
 }
 type tagSetTabIndex struct {
-	tagHeader
+	tag
 }
 type tagFileAttributes struct {
-	tagHeader
+	tag
 }
 type tagPlaceObject3 struct {
-	tagHeader
+	tag
 }
 type tagImportAssets2 struct {
-	tagHeader
+	tag
 }
 type tagDefineFontAlignZones struct {
-	tagHeader
+	tag
 }
 type tagCSMTextSettings struct {
-	tagHeader
+	tag
 }
 type tagDefineFont3 struct {
-	tagHeader
+	tag
 }
 type tagSymbolClass struct {
-	tagHeader
+	tag
 }
 type tagMetadata struct {
-	tagHeader
+	tag
 }
 type tagDefineScalingGrid struct {
-	tagHeader
+	tag
 }
 type tagDoABC struct {
-	tagHeader
+	tag
 }
 type tagDefineShape4 struct {
-	tagHeader
+	tag
 }
 type tagDefineMorphShape2 struct {
-	tagHeader
+	tag
 }
 type tagDefineSceneAndFrameLabelData struct {
-	tagHeader
+	tag
 }
 type tagDefineBinaryData struct {
-	tagHeader
+	tag
 }
 type tagDefineFontName struct {
-	tagHeader
+	tag
 }
 type tagStartSound2 struct {
-	tagHeader
+	tag
 }
 type tagDefineBitsJPEG4 struct {
-	tagHeader
+	tag
 }
 type tagDefineFont4 struct {
-	tagHeader
+	tag
 }
 type tagEnableTelemetry struct {
-	tagHeader
+	tag
 }
