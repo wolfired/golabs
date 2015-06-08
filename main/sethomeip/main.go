@@ -1,35 +1,16 @@
 package main
 
 import (
-	// "log"
+	"fmt"
 	"net/http"
 	"os"
-	"time"
 )
 
 func main() {
-	if 1 < len(os.Args) {
-		setHomeIP()
-		return
-	}
-
-	for true {
-		setHomeIP()
-		time.Sleep(5 * time.Minute)
-	}
-}
-
-func setHomeIP() {
-	_, err := http.Get("https://ddns-deriflow.rhcloud.com/set_ip?passwd=112358&key=81&domain=wolfired.com&host=pi")
-	if nil != err {
-		// log.Fatalln(err)
-	}
-
-	/*	defer resp.Body.Close()
-		body, err := ioutil.ReadAll(resp.Body)
-		if nil != err {
-			log.Fatalln(err)
-		}
-
-		fmt.Println(string(body))*/
+	passwd := os.Args[0]
+	key := os.Args[1]
+	domain := os.Args[2]
+	host := os.Args[3]
+	url := fmt.Sprintf("https://ddns-deriflow.rhcloud.com/set_ip?passwd=%s&key=%s&domain=%s&host=%s", passwd, key, domain, host)
+	http.Get(url)
 }
