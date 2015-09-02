@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/wolfired/golabs/idiotDB"
-	"github.com/wolfired/golabs/server"
 	"github.com/wolfired/golabs/swfchef"
 	"io/ioutil"
 	"os"
