@@ -28,7 +28,7 @@ var (
 func Index(res http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(res, "%s", "<a href='set_ip?passwd=&key=&domain=&host=' target='_blank'>记录IP</a><br/>")
 	fmt.Fprintf(res, "%s", "<a href='get_ip?key=' target='_blank'>获取IP</a><br/>")
-	fmt.Fprintf(res, "%s", "<a href='show_nts?key=' target='_blank'>下次更新IP的时间</a>")
+	fmt.Fprintf(res, "%s", "<a href='show_nts?key=' target='_blank'>下次更新IP的时间</a><br/>")
 	fmt.Fprintf(res, "%s", "<a href='gen_noes?noes=' target='_blank'>GenNoes</a>")
 }
 
