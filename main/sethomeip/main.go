@@ -11,6 +11,6 @@ func main() {
 	key := os.Args[2]
 	domain := os.Args[3]
 	host := os.Args[4]
-	url := fmt.Sprintf("https://ddns-deriflow.rhcloud.com/set_ip?passwd=%s&key=%s&domain=%s&host=%s", passwd, key, domain, host)
+	url := fmt.Sprintf("https://ddns-wolfired.rhcloud.com/set_ip?passwd=%s&key=%s&domain=%s&host=%s", passwd, key, domain, host)
 	http.Get(url)
 }
