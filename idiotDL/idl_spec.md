@@ -1,7 +1,7 @@
 [TOC]
 
 ## Basic Type
----
+
 **Integer**: `i8 i16 i32 i64` `u8 u16 u32 u64`
 
 **Floating**: `f32 f64`
@@ -21,13 +21,13 @@
 **Reference**: type`&`
 
 ## Complex Type
----
+
 **Array**: `[`length?`]`vtype
 
 **Map**: `[`ktype`]`vtype
 
 ## Custom Type
----
+
 **Function/Method**
 ```
 pkg.name (
