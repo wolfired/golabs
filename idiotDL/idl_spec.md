@@ -1,48 +1,46 @@
 [TOC]
 
-## Base Type
+## Basic Type
+---
+**Integer**: `i8 i16 i32 i64` `u8 u16 u32 u64`
 
-**Integer**:
-`i[8|16|32|64]`
-`u[8|16|32|64]`
+**Floating**: `f32 f64`
 
-**Floating**:
-`f[32|64]`
+**Boolean**: `b`
 
-**Boolean**:
-`b`
+**Bit**: `bi`
 
-**Character**:
-`c`
+**Byte**: `by`
 
-**String**:
-`s`
+**Character**: `c`
+
+**String**: `s`
+
+**Pointer**: type`*`
+
+**Reference**: type`&`
 
 ## Complex Type
+---
+**Array**: `[`length?`]`vtype
 
-**Array**
-```
-[length]vtype
-```
-
-**Map**
-```
-[ktype]vtype
-```
+**Map**: `[`ktype`]`vtype
 
 ## Custom Type
+---
 **Function/Method**
 ```
 pkg.name (
-    in param_type param_name
+    param_type param_name = default_value
+    return_type - return_name
 )
 ```
 
 **Struct/Class/Interface**
 ```
 pkg.Name {
-    anonymous_type
+    anonymous_custom_type
     field_type field_name
-    name (in param_type param_name)
+    method_name (param_type param_name, return_type)
 }
 ```
