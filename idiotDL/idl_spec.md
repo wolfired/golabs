@@ -2,42 +2,38 @@
 
 ## Base Type
 
-**Integer**  
-```
-i[8|16|32|64]
-u[8|16|32|64]
-```
+**Integer**:
+`i[8|16|32|64]`
+`u[8|16|32|64]`
 
-**Floating**  
-```
-f[32|64]
-```
+**Floating**:
+`f[32|64]`
 
-**Boolean**  
-```
-b
-```
+**Boolean**:
+`b`
 
-**String**  
-```
-s
-```
+**Character**:
+`c`
+
+**String**:
+`s`
 
 ## Complex Type
 
-**Array**  
+**Array**
 ```
 [length]vtype
 ```
 
-**Map**  
+**Map**
 ```
 [ktype]vtype
 ```
 
+## Custom Type
 **Function/Method**
 ```
-pkg.fn_name (
+pkg.name (
     in param_type param_name
 )
 ```
@@ -47,6 +43,6 @@ pkg.fn_name (
 pkg.Name {
     anonymous_type
     field_type field_name
-    fn_name (in param_type param_name)
+    name (in param_type param_name)
 }
 ```
