@@ -31,8 +31,8 @@
 **Function/Method**
 ```
 pkg.name (
-    param_type param_name = default_value
-    return_type - return_name
+    i param_name param_type
+    o return_name return_type
 )
 ```
 
@@ -40,7 +40,7 @@ pkg.name (
 ```
 pkg.Name {
     anonymous_custom_type
-    field_type field_name
-    method_name (param_type param_name, return_type)
+    field_name field_type
+    method_name (i param_name param_type, o return_name return_type)
 }
 ```
