@@ -31,8 +31,8 @@
 **Function/Method**
 ```
 pkg.name (
-    i param_name param_type
-    o return_name return_type
+    in param_name param_type
+    out return_name return_type
 )
 ```
 
@@ -41,6 +41,6 @@ pkg.name (
 pkg.Name {
     anonymous_custom_type
     field_name field_type
-    method_name (i param_name param_type, o return_name return_type)
+    method_name (in param_name param_type, out return_name return_type)
 }
 ```
