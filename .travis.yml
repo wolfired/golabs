@@ -3,7 +3,7 @@ language: go
 go:
  - tip
 
-script: go test idiotGS
+script: go test github.com/wolfired/golabs/idiotGS
 
 notifications:
  email: false
