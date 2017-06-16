@@ -3,7 +3,7 @@ language: go
 go:
  - tip
 
-script: cd swfchef && go test
+script: go test idiotGS
 
 notifications:
  email: false
