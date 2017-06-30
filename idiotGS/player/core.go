@@ -1,10 +1,16 @@
 package player
 
+import (
+	"github.com/wolfired/golabs/idiotGS/player/slot"
+)
+
 // Core 核心
 type Core struct {
-	uuid [16]byte //唯一ID
-	name string   //名字
-	lv   byte     //等级
+	uuid   [16]byte                  //唯一ID
+	name   string                    //名字
+	race   byte                      //种族
+	gender byte                      //性别
+	slots  map[slot.Slot]interface{} //槽位
 }
 
 // Encode 编码
