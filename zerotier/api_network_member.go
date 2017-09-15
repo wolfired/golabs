@@ -1,5 +1,11 @@
 package zerotier
 
+import (
+	"encoding/json"
+	"io/ioutil"
+	"net/http"
+)
+
 type Resp struct {
 	Members []Member `json:"members"`
 }
@@ -53,5 +59,16 @@ type Config struct {
 }
 
 func (t *TierClient) NetworkMember() {
+	req, _ := http.NewRequest("GET", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", nil)
+	req.Header.Add("Authorization", "bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 
+	resp, _ := http.DefaultClient.Do(req)
+
+	bytes, _ := ioutil.ReadAll(resp.Body)
+	resp.Body.Close()
+
+	str := `{"members": ` + string(bytes) + `}`
+
+	result := new(Resp)
+	json.Unmarshal([]byte(str), result)
 }
