@@ -28,7 +28,7 @@ func makeStruct(bv reflect.Value) {
 
 		switch fv.Kind() {
 		case reflect.Map:
-			fv.Set(reflect.MakeMap(fv.Type()))
+			// fv.Set(reflect.MakeMap(fv.Type()))
 		case reflect.Slice:
 			// fv.Set(reflect.MakeSlice(fv.Type(), 0, 0))
 		case reflect.Chan:
@@ -48,7 +48,7 @@ func makeStruct(bv reflect.Value) {
 }
 
 /*FillStruct 自动填充Struct*/
-func FillStruct(container interface{}, dict map[interface{}]interface{}, tag string) {
+func FillStruct(container interface{}, dict map[string]interface{}, tag string) {
 	cv := reflect.ValueOf(container)
 
 	fillStruct(cv, dict, tag)
@@ -95,10 +95,12 @@ func fillSlice(v reflect.Value, s []interface{}, tag string) {
 	v.Set(nv)
 }
 
-func fillMap(v reflect.Value, d map[interface{}]interface{}, tag string) {
-	kt := v.Type().Key()
+func fillMap(v reflect.Value, d map[string]interface{}, tag string) {
+	nv := reflect.MakeMapWithSize(v.Type(), len(d))
+
+	kt := nv.Type().Key()
 	ktk := kt.Kind()
-	vt := v.Type().Elem()
+	vt := nv.Type().Elem()
 	vtk := vt.Kind()
 
 	for dk, dx := range d {
@@ -108,11 +110,13 @@ func fillMap(v reflect.Value, d map[interface{}]interface{}, tag string) {
 		xv := reflect.Indirect(reflect.New(vt))
 		shunt(vtk, xv, dx, tag)
 
-		v.SetMapIndex(kv, xv)
+		nv.SetMapIndex(kv, xv)
 	}
+
+	v.Set(nv)
 }
 
-func fillStruct(v reflect.Value, d map[interface{}]interface{}, tag string) {
+func fillStruct(v reflect.Value, d map[string]interface{}, tag string) {
 	if reflect.Ptr == v.Kind() {
 		v = v.Elem()
 	}
@@ -154,14 +158,14 @@ func shunt(kind reflect.Kind, v reflect.Value, x interface{}, tag string) {
 	case reflect.Uint64:
 		fillUint(v, x)
 	case reflect.Map:
-		fillMap(v, x.(map[interface{}]interface{}), tag)
+		fillMap(v, x.(map[string]interface{}), tag)
 	case reflect.Ptr:
-		fillStruct(v, x.(map[interface{}]interface{}), tag)
+		fillStruct(v, x.(map[string]interface{}), tag)
 	case reflect.Slice:
 		fillSlice(v, x.([]interface{}), tag)
 	case reflect.String:
 		fillString(v, x)
 	case reflect.Struct:
-		fillStruct(v, x.(map[interface{}]interface{}), tag)
+		fillStruct(v, x.(map[string]interface{}), tag)
 	}
 }

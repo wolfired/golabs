@@ -12,9 +12,9 @@ type MetaInfo struct {
 
 /*InfoDict 信息字典*/
 type InfoDict struct {
-	Name        string   `torrent:"name"`         //单文件: 文件名，多文件: 目录名
-	PieceLength uint64   `torrent:"piece length"` //
-	Pieces      []string `torrent:"pieces"`
+	Name        string `torrent:"name"`         //单文件: 文件名，多文件: 目录名
+	PieceLength uint64 `torrent:"piece length"` //
+	Pieces      string `torrent:"pieces"`
 
 	//单文件
 	Length uint64 `torrent:"length"`

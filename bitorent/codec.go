@@ -27,18 +27,19 @@ func encodel(l []interface{}, buf *bytes.Buffer) {
 		case []interface{}:
 			encodel(v.([]interface{}), buf)
 		case map[string]interface{}:
-			encoded(v.(map[interface{}]interface{}), buf)
+			encoded(v.(map[string]interface{}), buf)
 		}
 	}
 
 	buf.WriteString("e")
 }
 
-func encoded(d map[interface{}]interface{}, buf *bytes.Buffer) {
+func encoded(d map[string]interface{}, buf *bytes.Buffer) {
 	buf.WriteString("d")
 
 	for k, v := range d {
-		encodes(k.(string), buf)
+		encodes(k, buf)
+
 		switch v.(type) {
 		case int:
 			encodei(v.(uint64), buf)
@@ -46,8 +47,8 @@ func encoded(d map[interface{}]interface{}, buf *bytes.Buffer) {
 			encodes(v.(string), buf)
 		case []interface{}:
 			encodel(v.([]interface{}), buf)
-		case map[string]interface{}:
-			encoded(v.(map[interface{}]interface{}), buf)
+		case map[interface{}]interface{}:
+			encoded(v.(map[string]interface{}), buf)
 		}
 	}
 
@@ -94,28 +95,28 @@ func decodel(buf *bytes.Buffer) []interface{} {
 	return l
 }
 
-func decoded(buf *bytes.Buffer) map[interface{}]interface{} {
+func decoded(buf *bytes.Buffer) map[string]interface{} {
 	buf.ReadRune()
 
-	d := make(map[interface{}]interface{})
+	d := make(map[string]interface{})
 
-	for k, _, _ := buf.ReadRune(); 'e' != k; k, _, _ = buf.ReadRune() {
+	for m, _, _ := buf.ReadRune(); 'e' != m; m, _, _ = buf.ReadRune() {
 		buf.UnreadRune()
 
-		s := decodes(buf)
+		k := decodes(buf)
 
-		k, _, _ = buf.ReadRune()
+		m, _, _ = buf.ReadRune()
 		buf.UnreadRune()
 
 		switch {
-		case 'i' == k:
-			d[s] = decodei(buf)
-		case '0' <= k && k <= '9':
-			d[s] = decodes(buf)
-		case 'l' == k:
-			d[s] = decodel(buf)
-		case 'd' == k:
-			d[s] = decoded(buf)
+		case 'i' == m:
+			d[k] = decodei(buf)
+		case '0' <= m && m <= '9':
+			d[k] = decodes(buf)
+		case 'l' == m:
+			d[k] = decodel(buf)
+		case 'd' == m:
+			d[k] = decoded(buf)
 		}
 	}
 
@@ -125,6 +126,7 @@ func decoded(buf *bytes.Buffer) map[interface{}]interface{} {
 /*Decode 解码*/
 func Decode(bs []byte, mi interface{}) {
 	buf := bytes.NewBuffer(bs)
+
 	d := decoded(buf)
 
 	auto.FillStruct(mi, d, tagName)
