@@ -2,20 +2,24 @@ package auto
 
 import "reflect"
 
-/*MakeStruct 自动构造Struct*/
-func MakeStruct(blueprint interface{}) interface{} {
+/*MakeInstance 自动构造Instance*/
+func MakeInstance(blueprint interface{}) interface{} {
 	bv := reflect.ValueOf(blueprint)
 
 	if reflect.Ptr != bv.Kind() {
 		bv = reflect.New(bv.Type())
 	}
 
-	makeStruct(bv)
+	makeInstance(bv)
 
 	return bv.Interface()
 }
 
-func makeStruct(bv reflect.Value) {
+func shuntMake() {
+
+}
+
+func makeInstance(bv reflect.Value) {
 	if reflect.Ptr == bv.Kind() {
 		bv = bv.Elem()
 	}
@@ -32,13 +36,13 @@ func makeStruct(bv reflect.Value) {
 		case reflect.Chan:
 			// fv.Set(reflect.MakeChan(fv.Type(), 0))
 		case reflect.Struct:
-			makeStruct(fv)
+			makeInstance(fv)
 		case reflect.Ptr:
 			ft := fv.Type().Elem()
 
 			if bt != ft {
 				nv := reflect.New(ft)
-				makeStruct(nv)
+				makeInstance(nv)
 				fv.Set(nv)
 			}
 		}
