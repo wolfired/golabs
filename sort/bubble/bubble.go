@@ -4,36 +4,31 @@ package bubble
 Sort 冒泡排序
 */
 func Sort(sample []int) {
-	optimize(sample)
 }
 
 func theory(sample []int) {
-	n := len(sample)
+	n := uint(len(sample))
 
-	for i := 0; i < n-1; i++ {
-		for j := 0; j < n-1; j++ {
-			if sample[j] > sample[j+1] {
-				sample[j], sample[j+1] = sample[j+1], sample[j]
+	for i := uint(1); i < n; i++ {
+		for j := uint(1); j < n; j++ {
+			if sample[j-1] > sample[j] {
+				sample[j-1], sample[j] = sample[j], sample[j-1]
 			}
 		}
 	}
 }
 
 func optimize(sample []int) {
-	n := len(sample)
+	n := uint(len(sample))
 
-	for i := 0; i < n-1; i++ {
-		sorted := true
+	for sorted, i := false, uint(1); !sorted && i < n; i++ {
+		sorted = true
 
-		for j := 0; j < n-1-i; j++ {
-			if sample[j] > sample[j+1] {
+		for j := uint(1); j < n-i+1; j++ {
+			if sample[j-1] > sample[j] {
 				sorted = false
-				sample[j], sample[j+1] = sample[j+1], sample[j]
+				sample[j-1], sample[j] = sample[j], sample[j-1]
 			}
-		}
-
-		if sorted {
-			break
 		}
 	}
 }
