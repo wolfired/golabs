@@ -75,32 +75,3 @@ type Indexer interface {
 	Set(i int, v any)
 	Get(i int) any
 }
-
-/*
-Lister 列表
-*/
-type Lister interface {
-	Sizer
-	Indexer
-}
-
-/*
-Stacker 栈
-*/
-type Stacker interface {
-	Pusher
-	Popper
-}
-
-/*
-Queuer 队列
-*/
-type Queuer interface {
-	Pusher
-	Puller
-}
-
-type node struct {
-	prev, next *node
-	value any
-}
