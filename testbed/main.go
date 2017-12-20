@@ -1,23 +1,33 @@
 package main
 
 import (
-	"github.com/wolfired/golabs/auto"
+	"fmt"
+	"net/http"
+	"os"
+
+	"github.com/wolfired/golabs/namesilo"
+	"github.com/wolfired/golabs/openshift"
 )
 
-//Sun sun
-type Sun struct {
-	Son  *Son
-	Name string
-}
-
-//Son son
-type Son struct {
-	Name string
+func init() {
+	openshift.Passwd = os.Getenv("PASSWD")
+	openshift.SiloCli = &namesilo.SiloClient{1, "xml", os.Getenv("NS_TOKEN")}
+	openshift.Hight = 5
+	openshift.Low = 1
 }
 
 func main() {
-	sun := Sun{}
-	auto.PrintInstance(sun)
-	// i := 1
-	// auto.PrintInstance(&i)
+	http.HandleFunc("/", openshift.Index)
+	http.HandleFunc("/set_ip", openshift.SetIP)
+	http.HandleFunc("/get_ip", openshift.GetIP)
+	http.HandleFunc("/show_nts", openshift.ShowNextTimestamp)
+	http.HandleFunc("/generate_204", openshift.Generate204)
+	http.HandleFunc("/gen_noes", openshift.GenNoes)
+
+	bind := fmt.Sprintf("%s:%s", os.Getenv("HOST"), os.Getenv("PORT"))
+	fmt.Printf("listening on %s...", bind)
+	err := http.ListenAndServe(bind, nil)
+	if err != nil {
+		panic(err)
+	}
 }
