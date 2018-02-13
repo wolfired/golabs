@@ -26,6 +26,8 @@ func MakeSession(c *ws.Conn) (s *Session) {
 func (s *Session) Run() {
 	defer s.Sock.Close()
 
+	log.Println("session run")
+
 	go func() {
 		for {
 			mt, dat, err := s.Sock.ReadMessage()
@@ -36,9 +38,11 @@ func (s *Session) Run() {
 			}
 			switch mt {
 			case ws.TextMessage:
-				log.Println(dat)
+				log.Printf("%s\n", dat)
+				s.Buf <- dat
 			case ws.BinaryMessage:
-				log.Println(string(dat))
+				log.Printf("%s\n", dat)
+				s.Buf <- dat
 			}
 		}
 	}()

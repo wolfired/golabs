@@ -1,7 +1,7 @@
 package player
 
 import (
-	"github.com/wolfired/golabs/idiotGS/player/slot"
+	"github.com/wolfired/golabs/idiotgs/player/slot"
 )
 
 // Core 核心

@@ -3,7 +3,7 @@ package player
 import (
 	"github.com/satori/go.uuid"
 
-	"github.com/wolfired/golabs/idiotGS/player/slot"
+	"github.com/wolfired/golabs/idiotgs/player/slot"
 )
 
 // Player 玩家

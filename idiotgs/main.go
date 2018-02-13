@@ -6,11 +6,18 @@ import (
 	"net/http"
 
 	ws "github.com/gorilla/websocket"
-	"github.com/wolfired/golabs/idiotGS/session"
+	"github.com/wolfired/golabs/idiotgs/session"
 )
 
 func main() {
-	addr := flag.String("addr", "localhost:9999", "Server")
+	help := flag.Bool("help", false, "帮助")
+	addr := flag.String("addr", "0.0.0.0:9999", "Server")
+	flag.Parse()
+
+	if *help || "" == *addr {
+		flag.Usage()
+		return
+	}
 
 	upgrader := ws.Upgrader{CheckOrigin: func(r *http.Request) bool { return true }}
 

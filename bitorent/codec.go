@@ -3,16 +3,15 @@ package bitorent
 import (
 	"bytes"
 	"strconv"
-
-	"github.com/wolfired/golabs/auto"
+	"sort"
 )
 
-func encodei(i uint64, buf *bytes.Buffer) {
-	buf.WriteString("i" + strconv.FormatUint(i, 10) + "e")
+func encodei(i int, buf *bytes.Buffer) {
+	buf.WriteString("i" + strconv.Itoa(i) + "e")
 }
 
 func encodes(s string, buf *bytes.Buffer) {
-	buf.WriteString(strconv.FormatUint(uint64(len([]rune(s))), 10) + ":" + s)
+	buf.WriteString(strconv.Itoa(len([]rune(s))) + ":" + s)
 }
 
 func encodel(l []interface{}, buf *bytes.Buffer) {
@@ -21,7 +20,7 @@ func encodel(l []interface{}, buf *bytes.Buffer) {
 	for _, v := range l {
 		switch v.(type) {
 		case int:
-			encodei(v.(uint64), buf)
+			encodei(v.(int), buf)
 		case string:
 			encodes(v.(string), buf)
 		case []interface{}:
@@ -37,17 +36,27 @@ func encodel(l []interface{}, buf *bytes.Buffer) {
 func encoded(d map[string]interface{}, buf *bytes.Buffer) {
 	buf.WriteString("d")
 
-	for k, v := range d {
+	keys := make([]string, 0, len(d))
+
+	for k := range d {
+		keys = append(keys, k)
+	}
+
+	sort.Strings(keys)
+
+	for _, k := range keys {
 		encodes(k, buf)
+
+		v := d[k]
 
 		switch v.(type) {
 		case int:
-			encodei(v.(uint64), buf)
+			encodei(v.(int), buf)
 		case string:
 			encodes(v.(string), buf)
 		case []interface{}:
 			encodel(v.([]interface{}), buf)
-		case map[interface{}]interface{}:
+		case map[string]interface{}:
 			encoded(v.(map[string]interface{}), buf)
 		}
 	}
@@ -55,11 +64,11 @@ func encoded(d map[string]interface{}, buf *bytes.Buffer) {
 	buf.WriteString("e")
 }
 
-func decodei(buf *bytes.Buffer) uint64 {
+func decodei(buf *bytes.Buffer) int {
 	buf.ReadRune()
 
 	bs, _ := buf.ReadBytes('e')
-	i, _ := strconv.ParseUint(string(bs[0:len(bs)-1]), 10, 0)
+	i, _ := strconv.Atoi(string(bs[0:len(bs)-1]))
 
 	return i
 }
@@ -124,10 +133,14 @@ func decoded(buf *bytes.Buffer) map[string]interface{} {
 }
 
 /*Decode 解码*/
-func Decode(bs []byte, mi interface{}) {
+func Decode(bs []byte) map[string]interface{} {
 	buf := bytes.NewBuffer(bs)
+	return decoded(buf)
+}
 
-	d := decoded(buf)
-
-	auto.FillStruct(mi, d, tagName)
+/*Encode 编码*/
+func Encode(d map[string]interface{}) []byte {
+	buf := bytes.NewBuffer(make([]byte, 0, 4096))
+	encoded(d, buf)
+	return buf.Bytes()
 }
