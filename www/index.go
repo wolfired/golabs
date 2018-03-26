@@ -40,7 +40,7 @@ func Serve() {
 	http.HandleFunc("/generate_204", Generate204)
 	http.HandleFunc("/gen_noes", GenNoes)
 
-	bind := fmt.Sprintf("%s:%s", os.Getenv("WEB_HOST"), os.Getenv("WEB_PORT"))
+	bind := fmt.Sprintf("%s:%s", os.Getenv("HOST"), os.Getenv("PORT"))
 	fmt.Printf("listening on %s...", bind)
 	err := http.ListenAndServe(bind, nil)
 	if err != nil {
