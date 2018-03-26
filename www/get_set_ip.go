@@ -1,6 +1,7 @@
 package www
 
 import (
+	"strings"
 	"net"
 	"fmt"
 	"github.com/wolfired/golabs/namesilo"
@@ -49,14 +50,12 @@ func SetIP(res http.ResponseWriter, req *http.Request) {
 		recordMap[key] = r
 	}
 
-	ipAndPort := req.Header.Get("X-Forwarded-For") //内部端口跳转
-	if "" == r.ip {
-		ipAndPort = req.RemoteAddr
+	ips := req.Header.Get("X-Forwarded-For") //内部端口跳转
+	if "" == ips {
+		r.ip, _, _ = net.SplitHostPort(req.RemoteAddr)
+	} else {
+		r.ip = strings.Split(ips, ",")[0]
 	}
-
-	ip, _, _ := net.SplitHostPort(ipAndPort)
-
-	r.ip = ip
 
 	r.ts = time.Now()
 
