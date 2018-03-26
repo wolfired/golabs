@@ -1,7 +1,7 @@
-/*记录IP*/
-package openshift
+package www
 
 import (
+	"net"
 	"fmt"
 	"github.com/wolfired/golabs/namesilo"
 	"net/http"
@@ -14,26 +14,18 @@ type record struct {
 }
 
 var (
-	Passwd  string //记录IP必须提供的密码，默认为空无法记录IP
+	/*Passwd 记录IP必须提供的密码，默认为空无法记录IP*/
+	Passwd  string
+	/*SiloCli namesilo客户端*/
 	SiloCli *namesilo.SiloClient
 )
 
 var (
-	record_map map[string]*record = make(map[string]*record, 8)
+	recordMap = make(map[string]*record, 8)
 )
 
 /*
-首页
-*/
-func Index(res http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(res, "%s", "<a href='set_ip?passwd=&key=&domain=&host=' target='_blank'>记录IP</a><br/>")
-	fmt.Fprintf(res, "%s", "<a href='get_ip?key=' target='_blank'>获取IP</a><br/>")
-	fmt.Fprintf(res, "%s", "<a href='show_nts?key=' target='_blank'>下次更新IP的时间</a><br/>")
-	fmt.Fprintf(res, "%s", "<a href='gen_noes?noes=' target='_blank'>GenNoes</a>")
-}
-
-/*
-记录IP到指定KEY，URL参数：passwd=密码，key=保存键值，domain=要同步更新A记录的域名（可选），host=要同步更新A记录的别名（可选）
+SetIP 记录IP到指定KEY，URL参数：passwd=密码，key=保存键值，domain=要同步更新A记录的域名（可选），host=要同步更新A记录的别名（可选）
 */
 func SetIP(res http.ResponseWriter, req *http.Request) {
 	err := req.ParseForm()
@@ -50,17 +42,22 @@ func SetIP(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	r := record_map[key]
+	r := recordMap[key]
 
 	if nil == r {
 		r = new(record)
-		record_map[key] = r
+		recordMap[key] = r
 	}
 
-	r.ip = req.Header.Get("X-Forwarded-For") //内部端口跳转
+	ipAndPort := req.Header.Get("X-Forwarded-For") //内部端口跳转
 	if "" == r.ip {
-		r.ip = req.RemoteAddr
+		ipAndPort = req.RemoteAddr
 	}
+
+	ip, _, _ := net.SplitHostPort(ipAndPort)
+
+	r.ip = ip
+
 	r.ts = time.Now()
 
 	fmt.Fprintf(res, "Set ip %s successfully", r.ip)
@@ -72,7 +69,9 @@ func SetIP(res http.ResponseWriter, req *http.Request) {
 	}
 }
 
-/*显示指定KEY下的IP下次更新的时间，URL参数：key=保存键值*/
+/*
+ShowNextTimestamp 显示指定KEY下的IP下次更新的时间，URL参数：key=保存键值
+*/
 func ShowNextTimestamp(res http.ResponseWriter, req *http.Request) {
 	err := req.ParseForm()
 	if nil != err {
@@ -82,7 +81,7 @@ func ShowNextTimestamp(res http.ResponseWriter, req *http.Request) {
 
 	key := req.Form.Get("key")
 
-	r := record_map[key]
+	r := recordMap[key]
 
 	if nil == r {
 		fmt.Fprintf(res, "do not have a ip for the key %s", key)
@@ -92,7 +91,9 @@ func ShowNextTimestamp(res http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(res, "%s", r.ts.UTC().In(time.FixedZone("+8", 28800)).Add(5*time.Minute).String())
 }
 
-/*获取指定KEY下的IP，URL参数：key=保存键值*/
+/*
+GetIP 获取指定KEY下的IP，URL参数：key=保存键值
+*/
 func GetIP(res http.ResponseWriter, req *http.Request) {
 	err := req.ParseForm()
 	if nil != err {
@@ -102,7 +103,7 @@ func GetIP(res http.ResponseWriter, req *http.Request) {
 
 	key := req.Form.Get("key")
 
-	r := record_map[key]
+	r := recordMap[key]
 
 	if nil == r {
 		fmt.Fprintf(res, "do not have a ip for the key %s", key)
@@ -119,7 +120,7 @@ func updateARecord(key string, domain string, host string) {
 		return
 	}
 
-	r := record_map[key]
+	r := recordMap[key]
 	if nil == r {
 		return
 	}

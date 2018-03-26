@@ -1,4 +1,4 @@
-package openshift
+package www
 
 import (
 	"fmt"
@@ -8,10 +8,15 @@ import (
 )
 
 var (
+	/*Hight 高位阀值*/
 	Hight uint
+	/*Low 低位阀值*/
 	Low   uint
 )
 
+/*
+GenNoes 生成数字串
+*/
 func GenNoes(res http.ResponseWriter, req *http.Request) {
 	err := req.ParseForm()
 	if nil != err {
