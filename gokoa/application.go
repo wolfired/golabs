@@ -1,59 +1,32 @@
 package gokoa
 
 import (
-	"context"
 	"net/http"
+
+	"github.com/wolfired/golabs/middleware"
 )
 
-type KeyResp string
-type KeyReq string
-
-type Next func()
-type Middleware func(ctx context.Context, next Next)
-
+/*
+Application 应用
+*/
 type Application struct {
-	middleware []Middleware
+	middleware.Middleware
 }
 
-func (a *Application)Use(middleware Middleware) (*Application) {
-	a.middleware = append(a.middleware, middleware)
-	return a
-}
-
-func (a *Application)Listen() {
-	http.Handle("/", a)
+func (a *Application) Listen() {
+	http.Handle("/index", a)
 	http.ListenAndServe(":8889", nil)
 }
 
-func (a *Application)ServeHTTP(resp http.ResponseWriter, req *http.Request) {
-	ctx := context.WithValue(context.Background(), KeyResp("resp"), resp)
-	ctx = context.WithValue(ctx, KeyReq("req"), req)
+func (a *Application) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
 
-	if(0 == len(a.middleware)){
-		resp.WriteHeader(404)
-		return
-	}
+}
 
-	done := make(chan struct{})
-	lock := make(chan chan struct{})
+type Session struct {
+	Req  *http.Request
+	Resp http.ResponseWriter
+}
 
-	go func(ctx context.Context){
-		for i := 0; i < len(a.middleware); i++ {
-			go func(ctx context.Context, i int, p chan struct{}, c chan struct{}) {
-				next := func() {
-					lock<-c
-					<-c
-				}
+func (s *Session) Next() {
 
-				a.middleware[i](ctx, next)
-
-				p<-struct{}{}
-			}(ctx, i, <-lock, make(chan struct{}))
-		}
-
-		<-lock<-struct{}{}
-	}(ctx)
-
-	lock<-done
-	<-done
 }
