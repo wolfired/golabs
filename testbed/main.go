@@ -1,28 +1,60 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"runtime/pprof"
 	"runtime/trace"
+	"strings"
 	"time"
 
-	"github.com/globalsign/mgo/bson"
-
+	"net/http"
+	"net/http/cookiejar"
 	_ "net/http/pprof"
 
-	"github.com/globalsign/mgo"
+	"github.com/wolfired/golabs/wasm/wabf"
 )
 
 func main() {
-	s, _ := mgo.Dial("192.168.74.229")
-	defer s.Close()
+	var buffer [512]byte
 
-	d := s.DB("demo")
-	c := d.C("t_user")
-	q := c.Find(bson.M)
-	q.One
+	n, err := os.Stdin.Read(buffer[:])
+	if err != nil {
+
+		fmt.Println("read error:", err)
+		return
+
+	}
+
+	fmt.Println("count:", n, ", msg:", string(buffer[:]))
+}
+
+func testPt() {
+	c := http.Client{}
+	c.Jar, _ = cookiejar.New(nil)
+
+	c.Post("https://www.hyperay.org/takelogin.php", "application/x-www-form-urlencoded", strings.NewReader("username=wolfired&password=knil81hyperay&authcode=&trackerssl=yes"))
+
+	r, _ := c.Get("https://www.hyperay.org/index.php")
+
+	buf := new(bytes.Buffer)
+	buf.ReadFrom(r.Body)
+	fmt.Printf("%s\n", buf.String())
+}
+
+func testWasm() {
+	cutWasm("./main.wasm", 0x1dbd+12)
+
+	raw, _ := ioutil.ReadFile("./main.wasm_")
+	wabf.Decode(raw)
+}
+
+func cutWasm(fileName string, len uint) {
+	raw, _ := ioutil.ReadFile(fileName)
+	ioutil.WriteFile(fileName+"_", raw[:len], os.ModePerm)
 }
 
 // 生成 CPU 报告
