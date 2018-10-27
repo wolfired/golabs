@@ -10,7 +10,7 @@ func theory(sample []int) {
 }
 
 func optimize(sample []int) {
-	for h, t := uint(0), uint(len(sample)); h < t; {
+	for h, t := 0, len(sample); h < t; {
 		for i := t - 1; i > h; i-- {
 			if sample[i-1] > sample[i] {
 				sample[i-1], sample[i] = sample[i], sample[i-1]

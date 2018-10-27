@@ -10,9 +10,9 @@ func theory(sample []int) {
 }
 
 func optimize(sample []int) {
-	gaps := [...]uint{701, 301, 132, 57, 23, 10, 4, 1}
+	gaps := [...]int{701, 301, 132, 57, 23, 10, 4, 1}
 
-	n := uint(len(sample))
+	n := len(sample)
 
 	for _, gap := range gaps {
 		for i := gap; i < n; i++ {

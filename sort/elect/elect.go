@@ -10,11 +10,9 @@ func theory(sample []int) {
 }
 
 func optimize(sample []int) {
-	n := uint(len(sample))
+	for i := len(sample) - 1; i > 0; i-- {
 
-	for i := uint(1); i < n; i++ {
-
-		c, m := n-i, n-i
+		c := i
 
 		for j := c; j > 0; j-- {
 			if sample[j-1] > sample[c] {
@@ -22,8 +20,8 @@ func optimize(sample []int) {
 			}
 		}
 
-		if c != m {
-			sample[c], sample[m] = sample[m], sample[c]
+		if c != i {
+			sample[c], sample[i] = sample[i], sample[c]
 		}
 	}
 }
