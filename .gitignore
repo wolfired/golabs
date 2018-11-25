@@ -1,3 +1,4 @@
+/.idea
 /.vscode
 *.o
 *.a
@@ -6,3 +7,9 @@
 *.lib
 *.dll
 *.exe
+*.test
+*.js
+*.wasm
+*.wat
+*.prof
+*.out
