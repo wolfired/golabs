@@ -11,12 +11,14 @@ type GateServer struct {
 
 func (g *GateServer) Run() {
 	ln, err := net.Listen(g.Net, g.Addr)
+
 	if nil != err {
 		fmt.Println(err)
 	}
 
 	for {
 		conn, err := ln.Accept()
+
 		if nil != err {
 			fmt.Println(err)
 			continue

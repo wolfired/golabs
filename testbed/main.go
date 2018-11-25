@@ -15,21 +15,13 @@ import (
 	"net/http/cookiejar"
 	_ "net/http/pprof"
 
+	"github.com/wolfired/golabs/goss"
 	"github.com/wolfired/golabs/wasm/wabf"
 )
 
 func main() {
-	var buffer [512]byte
-
-	n, err := os.Stdin.Read(buffer[:])
-	if err != nil {
-
-		fmt.Println("read error:", err)
-		return
-
-	}
-
-	fmt.Println("count:", n, ", msg:", string(buffer[:]))
+	// gotv.Boot()
+	goss.Boot()
 }
 
 func testPt() {
