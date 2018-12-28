@@ -1,4 +1,4 @@
-package comb
+package merge
 
 import (
 	"math/rand"
@@ -94,7 +94,7 @@ func Benchmark_optimize(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		b.StopTimer()
 		rand.Seed(time.Now().UnixNano())
-		sample := rand.Perm(100000)
+		sample := rand.Perm(1000000)
 		b.StartTimer()
 		optimize(sample)
 	}

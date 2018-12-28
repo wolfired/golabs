@@ -7,16 +7,11 @@ func Sort(sample []int) {
 }
 
 func theory(sample []int) {
-}
-
-func optimize(sample []int) {
-	gaps := [...]int{701, 301, 132, 57, 23, 10, 4, 1}
-
 	n := len(sample)
 
-	for _, gap := range gaps {
+	for gap := n / 2; 0 < gap; gap /= 2 {
 		for i := gap; i < n; i++ {
-			for j := i; j >= gap; j -= gap {
+			for j := i; gap <= j; j -= gap {
 				if sample[j-gap] > sample[j] {
 					sample[j-gap], sample[j] = sample[j], sample[j-gap]
 				} else {
@@ -25,4 +20,8 @@ func optimize(sample []int) {
 			}
 		}
 	}
+}
+
+func optimize(sample []int) {
+	theory(sample)
 }

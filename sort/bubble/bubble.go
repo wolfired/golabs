@@ -21,12 +21,12 @@ func theory(sample []int) {
 func optimize(sample []int) {
 	n := len(sample)
 
-	for sorted, i := false, 1; !sorted && i < n; i++ {
-		sorted = true
+	for unsort, i := true, 1; unsort && i < n; i++ {
+		unsort = false
 
 		for j := 1; j < n-i+1; j++ {
 			if sample[j-1] > sample[j] {
-				sorted = false
+				unsort = true
 				sample[j-1], sample[j] = sample[j], sample[j-1]
 			}
 		}
