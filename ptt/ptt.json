@@ -1,0 +1,21 @@
+{
+    "accounts": [{
+        "mode": -1,
+        "site": "chinesemovies",
+        "url": "https://chinesemovies.club",
+        "name": "",
+        "pass": "",
+        "info": {
+            "uid": 0,
+            "upload": "0",
+            "download": "0",
+            "share": 0.0,
+            "magic": 0.0,
+            "seed": 0,
+            "bulk": "0",
+            "day": 0,
+            "week": 0,
+            "level": 0
+        }
+    }]
+}
