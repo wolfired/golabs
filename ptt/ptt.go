@@ -19,7 +19,7 @@ func Boot() {
 	json.Unmarshal(bs, jp)
 
 	for _, p := range jp.Accounts {
-		if 0 > p.Mode {
+		if pts.ModeIgnore == p.Mode {
 			continue
 		}
 		site := pts.New(p)

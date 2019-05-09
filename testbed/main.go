@@ -15,13 +15,13 @@ import (
 	"net/http/cookiejar"
 	_ "net/http/pprof"
 
-	"github.com/wolfired/golabs/goss"
 	"github.com/wolfired/golabs/wasm/wabf"
 )
 
 func main() {
 	// gotv.Boot()
-	goss.Boot()
+	// goss.Boot()
+	// ptt.Boot()
 }
 
 func testPt() {

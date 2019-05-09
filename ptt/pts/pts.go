@@ -9,13 +9,25 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
+const (
+	//ModeIgnore 跳过
+	ModeIgnore int = 1
+	//ModeOnline 连网不保存
+	ModeOnline int = 2
+	//ModeOnlineAndSave 连网并保存
+	ModeOnlineAndSave int = 3
+	//ModeOffline 离线
+	ModeOffline int = 4
+)
+
 var (
+	cj    *cookiejar.Jar
 	httpc *http.Client
 	newfn map[string]func(account *Account) Siter
 )
 
 func init() {
-	cj, _ := cookiejar.New(nil)
+	cj, _ = cookiejar.New(nil)
 	httpc = &http.Client{Jar: cj}
 
 	newfn = make(map[string]func(account *Account) Siter)
