@@ -13,5 +13,6 @@
 *.wat
 *.prof
 *.out
+/testbed/main
 /testbed/*.*
 !/testbed/*.go
