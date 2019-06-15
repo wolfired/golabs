@@ -1,73 +1,8 @@
 /**
- * tsc -m none -t ESNEXT gotv.ts & uglifyjs gotv.js -o gotv.js & move /Y gotv.js ..\testbed
- * tsc -m none -t ESNEXT gotv.ts & uglifyjs gotv.js -o gotv.js & mv gotv.js ../testbed
+ * tsc -m none -t ESNEXT gotv.ts && uglifyjs gotv.js -o gotv.js && move /Y gotv.js ..\testbed
+ * cd ../gotv && tsc -m none -t ESNEXT gotv.ts && uglifyjs gunzip.min.js gotv.js -o gotv.js && mv gotv.js ../testbed && cd ../testbed
  */
 document.body.style.margin = "0px";
-
-interface Codec {
-    encode(buf: Uint8Array)
-    decode(buf: Uint8Array)
-}
-
-class Msg implements Codec {
-    private _head: number;
-
-    public get ctrl(): number {
-        return this._head & 0xFF;
-    }
-
-    public get size(): number {
-        return this._head >>> 0x8;
-    }
-
-    public constructor(ctrl: number) {
-        this._head |= (ctrl & 0xFF);
-    }
-
-    public encode(buf: Uint8Array): void {
-
-    }
-
-    public decode(buf: Uint8Array): void {
-
-    }
-
-    public handle(): void {
-
-    }
-}
-
-class MsgDraw extends Msg {
-    public constructor(ctrl: number) {
-        super(ctrl);
-    }
-
-    public encode(buf: Uint8Array): void {
-        super.encode(buf);
-    }
-
-    public decode(buf: Uint8Array): void {
-        super.decode(buf);
-
-        // let u8c = new Uint8ClampedArray(me.data);
-        // for (let i = 0; i < u8c.length; ++i) {
-        //     cid.data[i] = u8c[i];
-        // }
-        // c2d.putImageData(cid, 0, 0);
-    }
-
-    public handle(): void {
-
-    }
-}
-
-const c2sMsgs: Msg[] = [
-    new Msg(0x00),
-];
-
-const s2cMsgs: Msg[] = [
-    new MsgDraw(0x00),
-];
 
 const gotv = new class {
     private _ws: WebSocket;
@@ -83,6 +18,7 @@ const gotv = new class {
         };
         this._ws.onopen = (oe: Event) => {
             console.log("open");
+            scrn.boot();
         };
         this._ws.onclose = (ce: CloseEvent) => {
             console.log("close");
@@ -90,18 +26,26 @@ const gotv = new class {
         this._ws.onmessage = (me: MessageEvent) => {
             console.log("message");
 
-            let buf = new Uint8Array(me.data as ArrayBuffer);
-            let msg = s2cMsgs[buf[0]];
-            msg.decode(buf);
-            msg.handle();
+            // let buf = new Uint8Array(me.data as ArrayBuffer);
+            // let u8c = new Uint8ClampedArray(me.data);
+
+            // for (let i = 0; i < u8c.length; ++i) {
+            //     scrn._cid.data[i] = u8c[i];
+            // }
+            // scrn.draw();
+
+            var gunzip = new Zlib.Gunzip(new Uint8Array(me.data));
+            var plain = gunzip.decompress();
+
+            for (let i = 0; i < plain.length; ++i) {
+                scrn._cid.data[i] = plain[i];
+            }
+            scrn.draw();
         };
     }
 
     public halt(): void {
         this._ws.close();
-    }
-
-    public send(m: Msg): void {
     }
 }();
 
@@ -191,7 +135,7 @@ const gamepad = new class {
 const scrn = new class {
     private _can: HTMLCanvasElement;
     private _c2d: CanvasRenderingContext2D;
-    private _cid: ImageData;
+    public _cid: ImageData;
 
     public constructor() {
     }
@@ -204,7 +148,7 @@ const scrn = new class {
 
         this._c2d = this._can.getContext("2d");
 
-        this.resize(160.0, 144.0); // Gameboy size
+        this.resize(parseInt("{{.Wid}}"), parseInt("{{.Hei}}"));
     }
 
     public resize(wid: number, hei: number): void {

@@ -27,7 +27,7 @@ func serve() {
 		w.Write(index.Bytes())
 	})
 
-	http.ListenAndServe(flags.addr, nil)
+	http.ListenAndServe(flags.addr+":"+flags.port, nil)
 }
 
 //Boot Boot

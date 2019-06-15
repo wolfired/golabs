@@ -2,8 +2,10 @@ package gotv
 
 import (
 	"log"
+	"time"
 
 	"github.com/gorilla/websocket"
+	"github.com/wolfired/golabs/gotv/frame"
 )
 
 type hub struct {
@@ -71,11 +73,25 @@ func (h *hub) boot() {
 
 	go h.send()
 
+	go h.draw()
+
 	<-h.ctrl
 
 	log.Println("hub halt")
 }
 
 func (h *hub) draw() {
+	t := time.Tick(time.Millisecond * 41)
 
+	i := 0
+	a := frame.FromFile(flags.spritesheet, 100, 100, -3)
+
+	for {
+		select {
+		case <-t:
+			h.buf <- []byte(a.FrameAt(i%61, true))
+			i++
+			// h.buf <- []byte("hi")
+		}
+	}
 }

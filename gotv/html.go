@@ -15,7 +15,9 @@ func html() {
 	template.Must(template.ParseFiles(flags.js)).Execute(buf, struct {
 		Host string
 		Ws   string
-	}{flags.host, flags.ws})
+		Wid  int
+		Hei  int
+	}{flags.host + ":" + flags.port, flags.ws, flags.width, flags.height})
 
 	template.Must(template.New("index.html").Parse(`<html><head><title>{{.Title}}</title></head><body><script>{{ .Js }}</script></body></html>`)).Execute(index, struct {
 		Title string
