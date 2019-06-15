@@ -13,5 +13,5 @@
 *.wat
 *.prof
 *.out
-/testbed/*.php
-/testbed/*.json
+/testbed/*.*
+!/testbed/*.go
