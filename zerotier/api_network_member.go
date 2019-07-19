@@ -6,21 +6,23 @@ import (
 	"net/http"
 )
 
+// Resp 响应
 type Resp struct {
 	Members []Member `json:"members"`
 }
 
+// Member 成员数据结构
 type Member struct {
-	Id                  string    `json:"id"`
+	ID                  string    `json:"id"`
 	Type                string    `json:"type"`
 	Clock               uint64    `json:"clock"`
-	NetworkId           string    `json:"networkId"`
-	NodeId              string    `json:"nodeId"`
-	ControllerId        string    `json:"controllerId"`
+	NetworkID           string    `json:"networkId"`
+	NodeID              string    `json:"nodeId"`
+	ControllerID        string    `json:"controllerId"`
 	Hidden              string    `json:"hidden"`
-	name                string    `json:"name"`
-	online              bool      `json:"online"`
-	description         string    `json:"description"`
+	Name                string    `json:"name"`
+	Online              bool      `json:"online"`
+	Description         string    `json:"description"`
 	Config              Config    `json:"config"`
 	LastOnline          uint64    `json:"lastOnline"`
 	LastOffline         uint64    `json:"lastOffline"`
@@ -32,9 +34,10 @@ type Member struct {
 	SupportsRulesEngine uint64    `json:"supportsRulesEngine"`
 }
 
+// Config 配置
 type Config struct {
-	Id                           string   `json:"id"`
-	Nwid                         string   `json:"nwid"`
+	ID                           string   `json:"id"`
+	NWID                         string   `json:"nwid"`
 	CreationTime                 uint64   `json:"creationTime"`
 	Objtype                      string   `json:"objtype"`
 	Revision                     uint64   `json:"revision"`
@@ -44,7 +47,7 @@ type Config struct {
 	Capabilities                 []string `json:"capabilities"`
 	Identity                     string   `json:"identity"`
 	RemoteTraceTarget            string   `json:"remoteTraceTarget"`
-	IpAssignments                []string `json:"ipAssignments"`
+	IPAssignments                []string `json:"ipAssignments"`
 	NoAutoAssignIps              bool     `json:"noAutoAssignIps"`
 	Tags                         []string `json:"tags"`
 	LastAuthorizedTime           uint64   `json:"lastAuthorizedTime"`
@@ -58,6 +61,7 @@ type Config struct {
 	VProto                       uint64   `json:"vProto"`
 }
 
+// NetworkMember 查询网络成员
 func (t *TierClient) NetworkMember() {
 	req, _ := http.NewRequest("GET", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", nil)
 	req.Header.Add("Authorization", "bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxx")
