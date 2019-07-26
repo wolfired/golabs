@@ -6,7 +6,7 @@ import (
 )
 
 func serve() {
-	listen, err := net.Listen(flags.network, flags.address)
+	listen, err := net.Listen(flags.network, flags.host+":"+flags.port)
 
 	if nil != err {
 		fmt.Println(err)
@@ -28,7 +28,7 @@ func serve() {
 func Boot() {
 	parse()
 
-	go pfr()
+	go pfs()
 
 	serve()
 }

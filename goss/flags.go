@@ -8,16 +8,18 @@ import (
 var flags = struct {
 	help    bool
 	network string
-	address string
-	pfr     string
+	host    string
+	port    string
+	pfPort  string
 }{}
 
 func parse() {
 	flag.BoolVar(&flags.help, "help", false, "")
 
 	flag.StringVar(&flags.network, "network", "tcp", "")
-	flag.StringVar(&flags.address, "address", "0.0.0.0:8888", "")
-	flag.StringVar(&flags.pfr, "pfr", "0.0.0.0:843", "")
+	flag.StringVar(&flags.host, "host", "0.0.0.0", "")
+	flag.StringVar(&flags.port, "port", "8888", "")
+	flag.StringVar(&flags.pfPort, "pfPort", "8889", "")
 
 	flag.Parse()
 

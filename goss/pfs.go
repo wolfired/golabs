@@ -10,12 +10,8 @@ const (
 	pf  = `<?xml version="1.0"?><!DOCTYPE cross-domain-policy SYSTEM 'http://www.macromedia.com/xml/dtds/cross-domain-policy.dtd'><cross-domain-policy><allow-access-from domain="*" to-ports="*" /></cross-domain-policy>`
 )
 
-func pfr() {
-	if "" == flags.pfr {
-		return
-	}
-
-	listen, err := net.Listen(flags.network, flags.pfr)
+func pfs() {
+	listen, err := net.Listen(flags.network, flags.host+":"+flags.pfPort)
 
 	if nil != err {
 		fmt.Println(err)
