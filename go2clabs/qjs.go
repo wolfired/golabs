@@ -1,8 +1,8 @@
 package go2clabs
 
 // #cgo CFLAGS: -I/home/link/workspace_git/clabs/src -I/home/link/workspace_labs/quickjs-2019-07-09
-// #cgo LDFLAGS: -L/home/link/workspace_git/clabs/out -L/home/link/workspace_labs/quickjs-2019-07-09 -ldl -lm -lclabs -lquickjs
-// #include <clabs.h>
+// #cgo LDFLAGS: -L/home/link/workspace_git/clabs/lib -L/home/link/workspace_labs/quickjs-2019-07-09 -ldl -lm -lclabs_qjs -lquickjs
+// #include <qjs/qjs.h>
 import "C"
 
 import (
