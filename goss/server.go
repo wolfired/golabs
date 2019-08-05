@@ -24,11 +24,8 @@ func serve() {
 	}
 }
 
-//Boot Boot
-func Boot() {
+//BootServer BootServer
+func BootServer() {
 	parse()
-
-	go pfs()
-
 	serve()
 }

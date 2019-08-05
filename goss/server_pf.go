@@ -10,7 +10,7 @@ const (
 	pf  = `<?xml version="1.0"?><!DOCTYPE cross-domain-policy SYSTEM 'http://www.macromedia.com/xml/dtds/cross-domain-policy.dtd'><cross-domain-policy><allow-access-from domain="*" to-ports="*" /></cross-domain-policy>`
 )
 
-func pfs() {
+func servePF() {
 	listen, err := net.Listen(flags.network, flags.host+":"+flags.pfPort)
 
 	if nil != err {
@@ -33,4 +33,10 @@ func pfs() {
 			conn.Write([]byte{0})
 		}
 	}
+}
+
+//BootServerPF BootServerPF
+func BootServerPF() {
+	parse()
+	go servePF()
 }
