@@ -3,6 +3,7 @@ package swfchef
 import (
 	"bytes"
 	"compress/zlib"
+	"fmt"
 	"io/ioutil"
 	"log"
 )
@@ -105,5 +106,20 @@ func (swf *Swf) FrameCount() ui16 {
 }
 
 func (swf *Swf) Tags() {
-	// offset := 8 + swf.frameSize.Length() + 2 + 2
+	offset := 8 + uint(swf.frameSize.Length()) + 2 + 2
+
+	mark := raw2ui16(swf.raw[offset : offset+2])
+	len := uint(0)
+
+	for tagIndexEnd != uint(mark>>6) {
+		len = uint(mark) & 0x3F
+		if 0x3F == len {
+			len = uint(raw2ui32(swf.raw[offset+2 : offset+2+4]))
+			offset += 4
+		}
+		fmt.Println(tagLabelMap[mark>>6], len)
+
+		offset += 2 + len
+		mark = raw2ui16(swf.raw[offset : offset+2])
+	}
 }

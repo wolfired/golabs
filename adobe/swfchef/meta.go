@@ -9,7 +9,7 @@ type rectangle struct {
 }
 
 func (rect *rectangle) Length() ubn {
-	return 5 + rect.nbits*4/8 + 1
+	return (5+rect.nbits*4)/8 + 1
 }
 
 func raw2rectangle(raw []byte) (r rectangle) {
