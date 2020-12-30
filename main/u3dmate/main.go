@@ -28,7 +28,7 @@ var (
 const usage = `Unity手动授权自动化, 用法:
   cd path/to/unity
   ./Unity.exe -batchmode -createManualActivationFile
-  u3dmate -proxy http://127.0.0.1 -username XXX -password XXX -licensealf ./Unity_v2019.4.6f1.alf -licenseulf ./Unity_v2019.x.ulf
+  u3dmate -proxy http://127.0.0.1:1080 -username YOURUSERNAME -password YOURPASSWORD -licensealf ./Unity_v2019.4.6f1.alf -licenseulf ./Unity_v2019.x.ulf
   ./Unity.exe -batchmode -manualLicenseFile ./Unity_v2019.x.ulf
 `
 
