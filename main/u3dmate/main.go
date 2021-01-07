@@ -22,14 +22,39 @@ var (
 	password   string
 	licensealf string
 	licenseulf string
+	batfile    string
 	debug      bool
 )
 
-const usage = `Unity手动授权自动化, 用法:
-  cd path/to/unity
-  ./Unity.exe -batchmode -createManualActivationFile
-  u3dmate -proxy http://127.0.0.1:1080 -username YOURUSERNAME -password YOURPASSWORD -licensealf ./Unity_v2019.4.6f1.alf -licenseulf ./Unity_v2019.x.ulf
-  ./Unity.exe -batchmode -manualLicenseFile ./Unity_v2019.x.ulf
+// Unity手动授权自动化, BAT脚本:
+const battemp = `@echo off
+
+set U3DROOT=D:\Unity.2019.4.6f1\Editor
+
+set EXE_U3D=%%U3DROOT%%\Unity.exe
+
+set ALF=%%U3DROOT%%\Unity_v2019.4.6f1.alf
+set ULF=%%U3DROOT%%\Unity_v2019.x.ulf
+
+cd /D "%%U3DROOT%%"
+
+if not exist "%%ALF%%" (
+    "%%EXE_U3D%%" -batchmode -createManualActivationFile
+)
+
+if exist "%%ULF%%" (
+	del "%%ULF%%"
+)
+
+if exist "%%ALF%%" (
+	u3dmate.exe -proxy "%s" -username "%s" -password "%s" -licensealf "%%ALF%%" -licenseulf "%%ULF%%"
+)
+
+if exist "%%ULF%%" (
+	"%%EXE_U3D%%" -batchmode -manualLicenseFile "%%ULF%%"
+)
+
+pause
 `
 
 func main() {
@@ -39,12 +64,23 @@ func main() {
 	flag.StringVar(&password, "password", "", "Your Unity Password")
 	flag.StringVar(&licensealf, "licensealf", "", "License alf file you want to upload")
 	flag.StringVar(&licenseulf, "licenseulf", "", "Save path for the license ulf file")
+	flag.StringVar(&batfile, "batfile", "", "Gen bat script")
 	flag.BoolVar(&debug, "debug", false, "Debug mode for dev")
 
 	flag.Parse()
 
+	if !help && "" != batfile {
+		if "" == username {
+			username = "USERNAME"
+		}
+		if "" == password {
+			password = "PASSWROD"
+		}
+		ioutil.WriteFile(batfile, []byte(fmt.Sprintf(battemp, proxy, username, password)), os.ModePerm)
+		return
+	}
+
 	if help || "" == username || "" == password || "" == licensealf || "" == licenseulf {
-		fmt.Println(usage)
 		flag.Usage()
 		return
 	}
