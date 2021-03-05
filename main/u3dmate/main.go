@@ -23,6 +23,7 @@ var (
 	licensealf string
 	licenseulf string
 	batfile    string
+	urlencode  string
 	debug      bool
 )
 
@@ -65,6 +66,7 @@ func main() {
 	flag.StringVar(&licensealf, "licensealf", "", "License alf file you want to upload")
 	flag.StringVar(&licenseulf, "licenseulf", "", "Save path for the license ulf file")
 	flag.StringVar(&batfile, "batfile", "", "Gen bat script")
+	flag.StringVar(&urlencode, "urlencode", "", "Uust Encode URL")
 	flag.BoolVar(&debug, "debug", false, "Debug mode for dev")
 
 	flag.Parse()
@@ -77,6 +79,11 @@ func main() {
 			password = "PASSWROD"
 		}
 		ioutil.WriteFile(batfile, []byte(fmt.Sprintf(battemp, proxy, username, password)), os.ModePerm)
+		return
+	}
+
+	if !help && "" != urlencode {
+		fmt.Printf("%s", url.QueryEscape(urlencode))
 		return
 	}
 
