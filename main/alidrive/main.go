@@ -70,7 +70,6 @@ type HashedFile struct {
 	MD5         string `json:"md5"`
 	SHA1        string `json:"sha1"`
 	SHA256      string `json:"sha256"`
-	IPFS_CID_V0 string `json:"ipfs_cid_v0"`
 	IPFS_CID_V1 string `json:"ipfs_cid_v1"`
 }
 
@@ -79,11 +78,10 @@ func hash(path *string, name *string, recursion *bool) {
 
 	fileinfos, _ := ioutil.ReadDir(*path)
 
-	cb0 := cid.V0Builder{}
 	cb1 := cid.V1Builder{
-		cid.Raw,
-		mh.SHA2_256,
-		0,
+		Codec:    cid.Raw,
+		MhType:   mh.SHA2_256,
+		MhLength: 0,
 	}
 
 	for _, fileinfo := range fileinfos {
@@ -95,7 +93,6 @@ func hash(path *string, name *string, recursion *bool) {
 			md5ba := md5.Sum(bs)
 			sha1ba := sha1.Sum(bs)
 			sha256ba := sha256.Sum256(bs)
-			ipfs_cid_v0, _ := cb0.Sum(bs)
 			ipfs_cid_v1, _ := cb1.Sum(bs)
 			hash_file := HashedFile{
 				fileinfo.Name(),
@@ -103,7 +100,6 @@ func hash(path *string, name *string, recursion *bool) {
 				hex.EncodeToString(md5ba[:]),
 				hex.EncodeToString(sha1ba[:]),
 				hex.EncodeToString(sha256ba[:]),
-				ipfs_cid_v0.String(),
 				ipfs_cid_v1.String(),
 			}
 			hashed_folder.Files = append(hashed_folder.Files, hash_file)
