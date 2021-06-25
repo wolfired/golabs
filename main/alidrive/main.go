@@ -70,6 +70,7 @@ type HashedFile struct {
 	MD5         string `json:"md5"`
 	SHA1        string `json:"sha1"`
 	SHA256      string `json:"sha256"`
+	IPFS_CID_V0 string `json:"ipfs_cid_v0"`
 	IPFS_CID_V1 string `json:"ipfs_cid_v1"`
 }
 
@@ -100,6 +101,7 @@ func hash(path *string, name *string, recursion *bool) {
 				hex.EncodeToString(md5ba[:]),
 				hex.EncodeToString(sha1ba[:]),
 				hex.EncodeToString(sha256ba[:]),
+				"",
 				ipfs_cid_v1.String(),
 			}
 			hashed_folder.Files = append(hashed_folder.Files, hash_file)
