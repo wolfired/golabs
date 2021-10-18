@@ -42,9 +42,6 @@ const gotv = new class {
                 }
                 scrn.draw();
             }
-
-
-
         };
     }
 
