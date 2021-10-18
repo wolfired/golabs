@@ -25,22 +25,26 @@ const gotv = new class {
         };
         this._ws.onmessage = (me: MessageEvent) => {
             console.log("message");
+            let enable_zip = "{{.EnableZip}}";
+            if ("true" === enable_zip) {
+                var gunzip = new Zlib.Gunzip(new Uint8Array(me.data));
+                var plain = gunzip.decompress();
 
-            // let buf = new Uint8Array(me.data as ArrayBuffer);
-            // let u8c = new Uint8ClampedArray(me.data);
+                for (let i = 0; i < plain.length; ++i) {
+                    scrn._cid.data[i] = plain[i];
+                }
+                scrn.draw();
+            } else {
+                let u8c = new Uint8ClampedArray(me.data);
 
-            // for (let i = 0; i < u8c.length; ++i) {
-            //     scrn._cid.data[i] = u8c[i];
-            // }
-            // scrn.draw();
-
-            var gunzip = new Zlib.Gunzip(new Uint8Array(me.data));
-            var plain = gunzip.decompress();
-
-            for (let i = 0; i < plain.length; ++i) {
-                scrn._cid.data[i] = plain[i];
+                for (let i = 0; i < u8c.length; ++i) {
+                    scrn._cid.data[i] = u8c[i];
+                }
+                scrn.draw();
             }
-            scrn.draw();
+
+
+
         };
     }
 

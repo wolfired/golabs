@@ -14,7 +14,12 @@ var flags = struct {
 	ws    string
 	js    string
 
-	spritesheet string
+	spritesheet  string
+	sprite_wid   int
+	sprite_hei   int
+	sprite_count int
+
+	enable_zip bool
 
 	width  int
 	height int
@@ -33,6 +38,11 @@ func parse() {
 	flag.StringVar(&flags.js, "js", "./gotv.js", "")
 
 	flag.StringVar(&flags.spritesheet, "spritesheet", "./spritesheet.png", "")
+	flag.IntVar(&flags.sprite_wid, "sprite_wid", 100, "精灵宽")
+	flag.IntVar(&flags.sprite_hei, "sprite_hei", 100, "精灵高")
+	flag.IntVar(&flags.sprite_count, "sprite_count", 100, "小于0表示空白精灵数")
+
+	flag.BoolVar(&flags.enable_zip, "enable_zip", false, "")
 
 	flag.IntVar(&flags.width, "width", 160, "The Game Boy width is 160")
 	flag.IntVar(&flags.height, "height", 144, "The Game Boy height is 144")
